@@ -4,6 +4,7 @@ import be.ucll.demo.model.Status;
 import be.ucll.demo.model.User;
 import be.ucll.demo.model.UserService;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
@@ -60,7 +61,7 @@ public class Controller {
         if (u != null) {
             response.setContentType("application/json");
             try {
-                response.getWriter().write(toJson(u.getFriendlist()));
+                response.getWriter().write(String.valueOf(toJson(u.getFriendlist())));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -84,10 +85,18 @@ public class Controller {
         return "index";
     }
 
-    private String toJson(Set<User> list){
-        Gson json = new Gson();
-        String string = json.toJson(list);
-        System.out.println(string);
-        return string;
+    private Object toJson(Set<User> list){
+        JsonObject json = new JsonObject();
+        for (User u:list){
+            JsonObject user = new JsonObject();
+            user.addProperty("name",u.getName());
+            user.addProperty("statusname",u.getStatus().getName());
+            json.add(u.getName(),user);
+        }
+        return json.toString();
+        //        Gson json = new Gson();
+//        String string = json.toJson(list);
+//        System.out.println(string);
+//        return string;
     }
 }

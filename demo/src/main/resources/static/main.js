@@ -66,12 +66,13 @@ function showFriends(){
             let text = JSON.parse(xhr.responseText);
             console.log(text);
             let table = document.getElementById('friends');
-            for (let i=0;i<text.length;i++){
+            for (let person in text){
+                console.log(person);
                 let tr = document.createElement('tr');
                 let tdname = document.createElement('td');
-                tdname.innerText = text[i].name;
+                tdname.innerText = text[person].name;
                 let tdstatus = document.createElement('td');
-                tdstatus.innerText = text[i].statusname;
+                tdstatus.innerText = text[person].statusname;
                 tr.appendChild(tdname);
                 tr.appendChild(tdstatus);
                 tr.className = 'friendlist';
