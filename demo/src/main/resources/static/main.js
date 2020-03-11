@@ -4,7 +4,9 @@ dropdown.addEventListener("click",setstatus,false);
 let inputting = false;
 let addbutton = document.getElementById('addfriend');
 addbutton.addEventListener('click',addfriend,false);
+let timeoutid;
 getFriendlist();
+
 
 
 function setstatus(){
@@ -75,7 +77,7 @@ function showFriends(){
                 tr.className = 'friendlist';
                 table.appendChild(tr);
             }
-            setTimeout(getFriendlist,20000);
+            timeoutid = setTimeout(getFriendlist,20000);
         }
     }
 }
@@ -89,6 +91,7 @@ function clearTable(){
  }
 
  function addfriend(){
+     clearTimeout(timeoutid);
      xhr.open('POST','/addfriend/'+document.getElementById('name').value);
      xhr.send(null);
      getFriendlist();
