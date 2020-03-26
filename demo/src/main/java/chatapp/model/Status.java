@@ -1,4 +1,4 @@
-package be.ucll.demo.model;
+package chatapp.model;
 public enum Status {
     ONLINE("online"),
     OFFLINE("offline"),

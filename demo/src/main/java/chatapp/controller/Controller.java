@@ -1,9 +1,8 @@
-package be.ucll.demo.controller;
+package chatapp.controller;
 
-import be.ucll.demo.model.Status;
-import be.ucll.demo.model.User;
-import be.ucll.demo.model.UserService;
-import com.google.gson.Gson;
+import chatapp.model.Status;
+import chatapp.model.User;
+import chatapp.model.UserService;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,7 +32,15 @@ public class Controller {
             u.setStatus(Status.ONLINE);
         }
         session.setAttribute("user",service.getLoggedIn(name,password));
-        return "redirect:/";
+        model.addAttribute("statuses",Status.values());
+        return "home";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        return "index";
     }
 
     @PostMapping("/change/{status}")
@@ -81,7 +88,6 @@ public class Controller {
 
     @GetMapping("/")
     public String getHome(Model model){
-        model.addAttribute("statuses",Status.values());
         return "index";
     }
 

@@ -53,6 +53,7 @@ function update(){
 }
 
 function getFriendlist(){
+    console.log("refresh");
     xhr.open('GET','/friends');
     xhr.onreadystatechange = showFriends;
     xhr.send(null);
@@ -66,6 +67,7 @@ function showFriends(){
             let text = JSON.parse(xhr.responseText);
             console.log(text);
             let table = document.getElementById('friends');
+            let teller = 1;
             for (let person in text){
                 console.log(person);
                 let tr = document.createElement('tr');
@@ -73,10 +75,14 @@ function showFriends(){
                 tdname.innerText = text[person].name;
                 let tdstatus = document.createElement('td');
                 tdstatus.innerText = text[person].statusname;
+                let tdnr = document.createElement('td');
+                tdnr.innerText = teller;
+                tr.appendChild(tdnr);
                 tr.appendChild(tdname);
                 tr.appendChild(tdstatus);
                 tr.className = 'friendlist';
                 table.appendChild(tr);
+                teller++;
             }
             timeoutid = setTimeout(getFriendlist,20000);
         }

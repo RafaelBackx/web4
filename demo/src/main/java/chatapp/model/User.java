@@ -1,4 +1,4 @@
-package be.ucll.demo.model;
+package chatapp.model;
 
 import java.util.HashSet;
 import java.util.Set;
